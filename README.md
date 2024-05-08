@@ -14,14 +14,19 @@ $ pip install altazrange
 
 ```python
 from AltAzRange import AltAzimuthRange
-satellite = AltAzimuthRange()
-satellite.observer(51.77021, 18.061959, 115)
-satellite.target(51.681562, 17.778988, 43152)
+observer = np.array([51.773931, 18.061959, 50])
+target = np.array([[51.681562, 17.778988, 430000],
+                  [52.307790, 21.37, 190000]])
 
-satellite.calculate()
-{'azimuth': 245.49, 'elevation': 86.86, 'distance': 430555.14}
+    
+ calculator = AltAzimuthRange(observer, target)
+
+ result = calculator.calculate()
+
+[[2.4549000e+02 8.6860000e+01 4.3055514e+05]
+ [7.3900000e+01 3.7530000e+01 3.0454898e+05]]
 ```
-###  Usage for multiple objects with single observer location
+###  Old version
 If you want to use same observer for multiple objects its recommended to use default_observer
 ```python
 from AltAzRange import AltAzimuthRange
@@ -36,6 +41,6 @@ satellite_1.calculate()
 
 high_alt_balloon.calculate()
 {'azimuth': 74.1, 'elevation': 37.55, 'distance': 304391.38}
+
 ```
-Default observer can be overwritten using observer method. 
 
