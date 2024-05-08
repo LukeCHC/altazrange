@@ -32,8 +32,15 @@ class AltAzimuthRange():
     def validate_input(self, arr, is_observer=True):
         if isinstance(arr, list):
             arr = np.array(arr)
-        if not isinstance(arr, np.ndarray) or arr.ndim != 2 or arr.shape[1] != 3:
-            raise ValueError("Input must be a 2D numpy array with shape (N, 3)")
+        if isinstance(arr, np.ndarray):
+            # Reshape 1D numpy array of size 3 to 2D array with shape (1, 3)
+            if arr.ndim == 1 and arr.size == 3:
+                arr = arr.reshape(1, 3)
+            # Check if the array is now 2D and has the correct number of columns
+            if arr.ndim != 2 or arr.shape[1] != 3:
+                raise ValueError("Input must be a 2D numpy array with shape (N, 3)")
+        else:
+            raise TypeError("Input must be a list or a numpy array")
         return arr
              
     def normalise_azimuth(self, azimuths:np.ndarray):
@@ -42,7 +49,7 @@ class AltAzimuthRange():
         azimuths = np.mod(azimuths, 360)
         # Adjust values that are exactly 360 to 0 (since 360 degrees is equivalent to 0 degrees)
         # azimuths[azimuths == 360] = 0
-        azimuths = np.round(azimuths, 2)
+        azimuths = np.round(azimuths, 4)
 
         return azimuths        
         
@@ -51,7 +58,7 @@ class AltAzimuthRange():
         bp = self.LocationToPoint(self.target)
         bp_radius = bp[:,4] 
         br = self.RotateGlobe(self.target, self.observer, bp_radius)
-        dist = np.round(AltAzimuthRange.Distance(ap, bp), 2)
+        dist = np.round(AltAzimuthRange.Distance(ap, bp), 4)
         if (br[:,2] * br[:,2] + br[:,1] * br[:,1] > 1.0e-6).all():
             theta = np.arctan2(br[:,2], br[:,1]) * 180.0 / np.pi
             azimuth = 90.0 - theta
@@ -61,7 +68,7 @@ class AltAzimuthRange():
             if bma.all():
                 elevation = 90.0 - (180.0 / np.pi) * np.arccos(
                     bma[:,0] * ap[:,4] + bma[:,1] * ap[:,5] + bma[:,2] * ap[:,6])
-                elevation = np.round(elevation, 2)
+                elevation = np.round(elevation, 4)
             else:
                 elevation = None
         else:
@@ -174,7 +181,7 @@ if __name__ == "__main__":
 
     observer = np.array([51.773931, 18.061959, 50])
     target = np.array([[51.681562, 17.778988, 430000],
-                      [52.307790, 21.37, 190000]])
+                      [52.30, 21.37, 190000]])
     
     
     calculator = AltAzimuthRange(observer, target)
