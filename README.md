@@ -29,7 +29,7 @@ target = np.array([[51.681562, 17.778988, 430000],
  [7.41011000e+01 3.75527000e+01 3.04391381e+05]]
 ```
 ###  Old version
-If you want to use same observer for multiple objects its recommended to use default_observer
+This is how you would call the tool in the original version
 ```python
 from AltAzRange import AltAzimuthRange
 AltAzimuthRange.default_observer(51.773931, 18.061959, 50)
