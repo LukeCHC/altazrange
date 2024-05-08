@@ -16,17 +16,17 @@ Note that inputs and outputs are in degrees.
 
 ```python
 from AltAzRange import AltAzimuthRange
+
 observer = np.array([51.773931, 18.061959, 50])
 target = np.array([[51.681562, 17.778988, 430000],
-                  [52.307790, 21.37, 190000]])
-
+                  [52.30, 21.37, 190000]])
     
  calculator = AltAzimuthRange(observer, target)
 
  result = calculator.calculate()
 
-[[2.4549000e+02 8.6860000e+01 4.3055514e+05]
- [7.3900000e+01 3.7530000e+01 3.0454898e+05]]
+[[2.45487200e+02 8.68612000e+01 4.30555143e+05]
+ [7.41011000e+01 3.75527000e+01 3.04391381e+05]]
 ```
 ###  Old version
 If you want to use same observer for multiple objects its recommended to use default_observer
