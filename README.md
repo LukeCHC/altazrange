@@ -6,10 +6,7 @@
 Simple tool to calculate altitude (elevation), azimuth and range between observer and object or pair of coordinates.
  
 **Useful for eg. finding where to aim your antenna - no matter if it's drone, satellite, high altitude balloon.**
-## Instalation 
-```sh
-$ pip install altazrange
-```
+
 ## Basic Usage
 
 ```python
